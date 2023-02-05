@@ -81,6 +81,24 @@ _repository="http://openresty.org/package/alpine/v$_repository_version/main"
 grep -q 'openresty.org' /etc/apk/repositories &&
   sed -i "/openresty.org/c\\$_repository/" /etc/apk/repositories || echo $_repository >> /etc/apk/repositories
 
+# Update container OS
+log "Updating container OS"
+echo "fs.file-max = 65535" > /etc/sysctl.conf
+runcmd apk update
+runcmd apk upgrade
+
+# Install dependancies
+log "Installing dependencies"
+runcmd 'apk add python3 openresty nodejs yarn openssl apache2-utils logrotate $DEVDEPS'
+
+# Setup python env and PIP
+log "Setting up python"
+python3 -m venv /opt/certbot/
+runcmd python3 -m ensurepip --upgrade
+# Install certbot and python dependancies
+runcmd pip3 install --no-cache-dir -U cryptography==3.3.2
+runcmd pip3 install --no-cache-dir cffi certbot
+
 log "Checking for latest NPM release"
 # Get latest version information for nginx-proxy-manager
 runcmd 'wget $WGETOPT -O ./_latest_release $NPMURL/releases/latest'
