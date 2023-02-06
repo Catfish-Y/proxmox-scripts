@@ -174,6 +174,7 @@ cp -r backend/* /app
 cp -r global/* /app/global
 
 # Build the frontend
+set -x
 log "Building frontend"
 cd ./frontend
 export NODE_ENV=development
@@ -185,6 +186,7 @@ log "cp -r dist/* /app/frontend"
 cp -r dist/* /app/frontend
 log "cp -r app-images/* /app/frontend/images"
 cp -r app-images/* /app/frontend/images
+set +x
 
 # Initialize backend
 log "Initializing backend"
