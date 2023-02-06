@@ -177,9 +177,13 @@ cp -r global/* /app/global
 log "Building frontend"
 cd ./frontend
 export NODE_ENV=development
+log "Building frontend-yarn install"
 runcmd yarn install
+log "Building frontend-yarn build"
 runcmd yarn build
+log "cp -r dist/* /app/frontend"
 cp -r dist/* /app/frontend
+log "cp -r app-images/* /app/frontend/images"
 cp -r app-images/* /app/frontend/images
 
 # Initialize backend
