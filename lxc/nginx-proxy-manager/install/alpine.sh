@@ -178,9 +178,9 @@ set -x
 log "Building frontend"
 cd ./frontend
 export NODE_ENV=development
-log "Building frontend-yarn install"
+log "Building frontend-1"
 runcmd yarn install
-log "Building frontend-yarn build"
+log "Building frontend-2"
 runcmd yarn build
 log "cp -r dist/* /app/frontend"
 cp -r dist/* /app/frontend
