@@ -31,6 +31,9 @@ you can set these parameters by appending ` -- <parameter> <value>` like:
 ```bash
 curl -sL https://raw.githubusercontent.com/Catfish-Y/proxmox-scripts/main/lxc/nginx-proxy-manager/create.sh | bash -s -- --cores 4
 ```
+```bash
+curl -sL https://raw.yzuu.cf/Catfish-Y/proxmox-scripts/main/lxc/nginx-proxy-manager/create.sh | bash -s -- --cores 4
+```
 
 ### Console
 
@@ -46,6 +49,10 @@ If you are not using proxmox or want to install this on a existing Alpine box, y
 ```bash
 wget --no-cache -qO - https://raw.githubusercontent.com/Catfish-Y/proxmox-scripts/main/lxc/nginx-proxy-manager/setup.sh | sh
 ```
+```bash
+wget --no-cache -qO - https://raw.yzuu.cf/Catfish-Y/proxmox-scripts/main/lxc/nginx-proxy-manager/setup.sh | sh
+```
+
 
 ## Thanks
 
