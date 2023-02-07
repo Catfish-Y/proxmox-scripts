@@ -46,7 +46,7 @@ trapexit() {
 
 # Change-Source
 log "Change-Source"
-runcmd 'sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories'
+runcmd "sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories"
 runcmd 'yarn config set registry https://registry.npmmirror.com'
 
 # Check for previous install
