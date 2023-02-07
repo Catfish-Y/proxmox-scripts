@@ -101,9 +101,10 @@ runcmd 'yarn config set registry https://registry.npmmirror.com'
 
 # Setup python env and PIP
 log "Setting up python"
-runcmd pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+
 python3 -m venv /opt/certbot/
 runcmd python3 -m ensurepip --upgrade
+runcmd pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 # Install certbot and python dependancies
 runcmd pip3 install --no-cache-dir -U cryptography==3.3.2
 runcmd pip3 install --no-cache-dir cffi certbot
