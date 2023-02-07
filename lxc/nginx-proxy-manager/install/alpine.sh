@@ -44,8 +44,8 @@ trapexit() {
   apk del $DEVDEPS &>/dev/null
 }
 
-# Change-Source
-log "Change-Source"
+# Change-Source(Alpine)
+log "Change-Source(Alpine)"
 runcmd "sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories"
 runcmd 'yarn config set registry https://registry.npmmirror.com'
 
@@ -95,6 +95,10 @@ runcmd apk upgrade
 # Install dependancies
 log "Installing dependencies"
 runcmd 'apk add python3 openresty nodejs yarn openssl apache2-utils logrotate $DEVDEPS'
+
+# Change-Source(Yarn)
+log "Change-Source(Yarn)"
+runcmd 'yarn config set registry https://registry.npmmirror.com'
 
 # Setup python env and PIP
 log "Setting up python"
