@@ -190,8 +190,8 @@ cd ./frontend
 export NODE_ENV=development
 log "Building frontend-1"
 
-sed 's/github.com/hub.yzuu.cf/g' package.json
-sed 's/raw.githubusercontent.com/raw.yzuu.cf/g' package.json
+sed -i 's/github.com/hub.yzuu.cf/g' package.json
+sed -i 's/raw.githubusercontent.com/raw.yzuu.cf/g' package.json
 
 runcmd yarn install
 log "Building frontend-2"
