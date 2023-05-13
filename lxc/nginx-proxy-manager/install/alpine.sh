@@ -188,7 +188,6 @@ set -x
 log "Building frontend"
 cd ./frontend
 export NODE_ENV=development
-log "Building frontend-1"
 
 sed -i 's/github.com/hub.yzuu.cf/g' package.json
 sed -i 's/raw.githubusercontent.com/raw.yzuu.cf/g' package.json
@@ -197,7 +196,7 @@ sed -i 's/raw.githubusercontent.com/raw.yzuu.cf/g' package.json
 sed -i 's/registry.yarnpkg.com/registry.npmmirror.com/g' yarn.lock
 
 runcmd yarn install
-log "Building frontend-2"
+
 runcmd yarn build
 log "cp -r dist/* /app/frontend"
 cp -r dist/* /app/frontend
