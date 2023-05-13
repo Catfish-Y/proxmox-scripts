@@ -46,7 +46,7 @@ trapexit() {
 
 # Change-Source(Alpine)
 log "Change-Source(Alpine)"
-runcmd "sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories"
+runcmd "sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories"
 
 # Check for previous install
 if [ -f /etc/init.d/npm ]; then
@@ -196,11 +196,8 @@ sed -i 's/raw.githubusercontent.com/raw.yzuu.cf/g' package.json
 sed -i 's/registry.yarnpkg.com/registry.npmmirror.com/g' yarn.lock
 
 runcmd yarn install
-
 runcmd yarn build
-log "cp -r dist/* /app/frontend"
 cp -r dist/* /app/frontend
-log "cp -r app-images/* /app/frontend/images"
 cp -r app-images/* /app/frontend/images
 set +x
 
