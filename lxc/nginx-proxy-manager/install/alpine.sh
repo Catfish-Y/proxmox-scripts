@@ -73,13 +73,13 @@ log "Checking for latest openresty repository"
 _alpine_version=${VERSION_ID%.*}
 # add openresty public key
 if [ ! -f /etc/apk/keys/admin@openresty.com-5ea678a6.rsa.pub ]; then
-  runcmd 'wget $WGETOPT -P /etc/apk/keys/ http://openresty.org/package/admin@openresty.com-5ea678a6.rsa.pub'
+  runcmd 'wget $WGETOPT -P /etc/apk/keys/ https://openresty.org/package/admin@openresty.com-5ea678a6.rsa.pub'
 fi
 
 # Get the latest openresty repository
-_repository_version=$(wget $WGETOPT "http://openresty.org/package/alpine/" -O - | grep -Eo "[0-9]{1}\.[0-9]{1,2}" | sort -uVr | head -n1)
+_repository_version=$(wget $WGETOPT "https://openresty.org/package/alpine/" -O - | grep -Eo "[0-9]{1}\.[0-9]{1,2}" | sort -uVr | head -n1)
 _repository_version=$(printf "$_repository_version\n$_alpine_version" | sort -V | head -n1)
-_repository="http://openresty.org/package/alpine/v$_repository_version/main"
+_repository="https://openresty.org/package/alpine/v$_repository_version/main"
 
 # Update/Insert openresty repository
 grep -q 'openresty.org' /etc/apk/repositories &&
@@ -272,9 +272,11 @@ rc-update add openresty boot &>/dev/null
 rc-service openresty stop &>/dev/null
 
 # Start services
+set -x
 log "Starting services"
 runcmd rc-service openresty start
 runcmd rc-service npm start
+set +x
 
 IP=$(ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 log "Installation complete
