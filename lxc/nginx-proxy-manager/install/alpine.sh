@@ -193,8 +193,7 @@ log "Building frontend-1"
 sed -i 's/github.com/hub.yzuu.cf/g' package.json
 sed -i 's/raw.githubusercontent.com/raw.yzuu.cf/g' package.json
 
-# Change-Source(Yarn)
-log "Change-Source-(Yarn)"
+# Change-Source(Yarn-lock-file)
 sed -i 's/registry.yarnpkg.com/registry.npmmirror.com/g' yarn.lock
 
 runcmd yarn install
@@ -226,6 +225,10 @@ EOF
 fi
 cd /app
 export NODE_ENV=development
+
+# Change-Source(Yarn-lock-file)
+sed -i 's/registry.yarnpkg.com/registry.npmmirror.com/g' yarn.lock
+
 runcmd yarn install
 
 # Create NPM service
