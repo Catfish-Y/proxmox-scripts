@@ -195,7 +195,7 @@ sed -i 's/raw.githubusercontent.com/raw.yzuu.cf/g' package.json
 
 # Change-Source(Yarn)
 log "Change-Source-(Yarn)"
-runcmd 'yarn config set registry https://registry.npmmirror.com'
+sed -i 's/registry.yarnpkg.com/registry.npmmirror.com/g' yarn.lock
 
 runcmd yarn install
 log "Building frontend-2"
