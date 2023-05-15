@@ -271,6 +271,7 @@ rc-service openresty stop &>/dev/null
 # Start services
 set -x
 log "Starting services"
+sed -i 's/"pid /usr/local/openresty/nginx/logs/nginx.pid"/"# pid /usr/local/openresty/nginx/logs/nginx.pid"/g' /usr/local/openresty/nginx/conf/nginx.conf
 runcmd rc-service openresty start
 runcmd rc-service npm start
 set +x
