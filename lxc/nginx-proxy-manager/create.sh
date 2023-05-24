@@ -34,7 +34,7 @@ function error {
 _raw_base="https://raw.yzuu.cf/Catfish-Y/proxmox-scripts/main/lxc/nginx-proxy-manager"
 # Operating system
 _os_type=alpine
-_os_version=3.17
+_os_version=3.16
 # System architecture
 _arch=$(dpkg --print-architecture)
 
