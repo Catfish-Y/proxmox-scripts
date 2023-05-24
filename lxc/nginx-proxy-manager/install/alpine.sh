@@ -7,7 +7,7 @@ TEMPLOG="$TEMPDIR/tmplog"
 TEMPERR="$TEMPDIR/tmperr"
 LASTCMD=""
 WGETOPT="-t 1 -T 15 -q"
-DEVDEPS="npm g++ make gcc git python3-dev musl-dev libffi-dev openssl-dev"
+DEVDEPS="npm g++ make gcc git python3-dev musl-dev libffi-dev openssl-dev ca-certificates"
 NPMURL="https://hub.yzuu.cf/NginxProxyManager/nginx-proxy-manager"
 
 cd $TEMPDIR
@@ -271,9 +271,9 @@ rc-service openresty stop &>/dev/null
 # Start services
 set -x
 log "Starting services"
-#sed -i 's/"pid /usr/local/openresty/nginx/logs/nginx.pid"/"# pid /usr/local/openresty/nginx/logs/nginx.pid"/g' /usr/local/openresty/nginx/conf/nginx.conf
-#sed -i 's/pid /# pid /g' /usr/local/openresty/nginx/conf/nginx.conf
-#runcmd rc-service openresty start
+sed -i 's/user npm/user root/g; s/^pid/#pid/g' /usr/local/openresty/nginx/conf/nginx.conf
+sed -i 's/include-system-site-packages = false/include-system-site-packages = true/g' /opt/certbot/pyvenv.cfg
+runcmd rc-service openresty start
 runcmd rc-service npm start
 set +x
 
