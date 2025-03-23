@@ -121,9 +121,6 @@ step_start "Python"
   # Setup venv and install pip packages in venv
   python3 -m venv /opt/certbot/
   
-  # change python source
-  pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-
   . /opt/certbot/bin/activate
   os_fetch -O- $_pipGetScript | python3 >$__OUTPUT
   pip install -q -U --no-cache-dir cryptography cffi certbot tldextract
@@ -133,6 +130,9 @@ step_start "Python"
   ln -sf /usr/bin/python3 /usr/bin/python
   ln -sf /opt/certbot/bin/pip /usr/bin/pip
   ln -sf /opt/certbot/bin/certbot /usr/bin/certbot
+  
+  # change python source
+  pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
   
   step_end "Python ${CLR_CYB}v$PYTHON_VERSION${CLR} ${CLR_GN}and Pip${CLR} ${CLR_CYB}v$PIP_VERSION${CLR} ${CLR_GN}Installed"
 
