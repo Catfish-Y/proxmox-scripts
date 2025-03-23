@@ -76,10 +76,14 @@ step_start "Rust" "Installing" "Installed"
     fi
   fi
   
-  os_fetch -O ./rustup-init https://static.rust-lang.org/rustup/archive/1.26.0/$_rustArch/rustup-init
+  os_fetch -O ./rustup-init https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup/archive/1.26.0/$_rustArch/rustup-init
   chmod +x ./rustup-init
   ./rustup-init -q -y --no-modify-path --profile minimal --default-toolchain $RUST_VERSION --default-host $_rustArch &>$__OUTPUT
   rm ./rustup-init
+
+  # Rustup mirror
+  echo 'export RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup' >> ~/.bash_profile
+  echo 'export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup' >> ~/.bash_profile
 
   ln -sf ~/.cargo/bin/cargo /usr//bin/cargo
   ln -sf ~/.cargo/bin/rustc /usr/bin/rustc
