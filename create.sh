@@ -198,4 +198,4 @@ if [ "$EPS_OS_DISTRO" = "ubuntu" ]; then
 fi
 
 export EPS_UTILS_DISTRO=$(wget --no-cache -qO- $EPS_BASE_URL/utils/${_utilDistro}.sh)
-lxc-attach -n $EPS_CT_ID -- bash -c -v "$EPS_APP_INSTALL"
+lxc-attach -n $EPS_CT_ID -- bash -c "$EPS_APP_INSTALL"
