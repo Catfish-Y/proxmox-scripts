@@ -123,6 +123,10 @@ step_start "Python"
   
   . /opt/certbot/bin/activate
   os_fetch -O- $_pipGetScript | python3 >$__OUTPUT
+
+  # change python source
+  pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+
   pip install -q -U --no-cache-dir cryptography cffi certbot tldextract
   PIP_VERSION=$(pip -V 2>&1 | grep -o 'pip [0-9.]* ' | awk '{print $2}')
   deactivate
@@ -130,10 +134,7 @@ step_start "Python"
   ln -sf /usr/bin/python3 /usr/bin/python
   ln -sf /opt/certbot/bin/pip /usr/bin/pip
   ln -sf /opt/certbot/bin/certbot /usr/bin/certbot
-  
-  # change python source
-  pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-  
+
   step_end "Python ${CLR_CYB}v$PYTHON_VERSION${CLR} ${CLR_GN}and Pip${CLR} ${CLR_CYB}v$PIP_VERSION${CLR} ${CLR_GN}Installed"
 
 step_start "Openresty"
