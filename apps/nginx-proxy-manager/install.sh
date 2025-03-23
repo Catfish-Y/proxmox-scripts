@@ -204,20 +204,20 @@ step_start "Node.js"
   step_end "Node.js ${CLR_CYB}$NODE_VERSION${CLR} ${CLR_GN}Installed"
 
 step_start "Yarn"
-  export GNUPGHOME="$(mktemp -d)"
-  for key in 6A010C5166006599AA17F08146C2130DFD2497F5; do
-    gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$key" || gpg --batch --keyserver keyserver.ubuntu.com --recv-keys "$key" ;
-  done
+  # export GNUPGHOME="$(mktemp -d)"
+  # for key in 6A010C5166006599AA17F08146C2130DFD2497F5; do
+  #   gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$key" || gpg --batch --keyserver keyserver.ubuntu.com --recv-keys "$key" ;
+  # done
 
-  os_fetch -O yarn-v$YARN_VERSION.tar.gz https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz
-  os_fetch -O yarn-v$YARN_VERSION.tar.gz.asc https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz.asc
-  gpg -q --batch --verify yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz >$__OUTPUT
-  gpgconf --kill all
-  tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/
-  ln -sf /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn
-  ln -sf /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg
-  rm -rf "$GNUPGHOME" yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
-  
+  # os_fetch -O yarn-v$YARN_VERSION.tar.gz https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz
+  # os_fetch -O yarn-v$YARN_VERSION.tar.gz.asc https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz.asc
+  # gpg -q --batch --verify yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz >$__OUTPUT
+  # gpgconf --kill all
+  # tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/
+  # ln -sf /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn
+  # ln -sf /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg
+  # rm -rf "$GNUPGHOME" yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
+  apk add yarn
   #Change-Source(Yarn)
   yarn config set registry https://registry.npmmirror.com
 
