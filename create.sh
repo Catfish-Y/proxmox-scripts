@@ -184,8 +184,8 @@ step_start "LXC container" "Creating" "Created"
   pct start $EPS_CT_ID
   sleep 2
   if [ "$EPS_OS_DISTRO" = "alpine" ]; then
-    pct exec "$EPS_CT_ID" -- ash -c "apk add bash >/dev/null"
     pct exec "$EPS_CT_ID" -- sed -i 's#https\?://dl-cdn.alpinelinux.org/alpine#https://mirrors.tuna.tsinghua.edu.cn/alpine#g' /etc/apk/repositories
+    pct exec "$EPS_CT_ID" -- ash -c "apk add bash >/dev/null"
   fi
 
   step_end "LXC container ${CLR_CYB}$EPS_CT_ID${CLR_GN} created successfully"
