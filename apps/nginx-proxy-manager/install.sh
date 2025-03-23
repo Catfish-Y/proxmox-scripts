@@ -235,10 +235,10 @@ step_start "Enviroment" "Setting up" "Setup"
   sed -i "s/\"version\": \"0.0.0\"/\"version\": \"$NPM_VERSION\"/" frontend/package.json
   
   # change github links
-  sed -i 's#github.com#github.moeyy.xyz/github.com#g' backend/package.json
-  sed -i 's#raw.githubusercontent.com#github.moeyy.xyz/raw.githubusercontent.com#g' backend/package.json
-  sed -i 's#github.com#github.moeyy.xyz/github.com#g' frontend/package.json
-  sed -i 's#raw.githubusercontent.com#github.moeyy.xyz/raw.githubusercontent.com#g' frontend/package.json
+  sed -i 's#github.com#github.moeyy.xyz/https://github.com#g' backend/package.json
+  sed -i 's#raw.githubusercontent.com#github.moeyy.xyz/https://raw.githubusercontent.com#g' backend/package.json
+  sed -i 's#github.com#github.moeyy.xyz/https://github.com#g' frontend/package.json
+  sed -i 's#raw.githubusercontent.com#github.moeyy.xyz/https://raw.githubusercontent.com#g' frontend/package.json
 
   # Fix nginx config files for use with openresty defaults
   sed -i 's/user npm/user root/g; s/^pid/#pid/g; s+^daemon+#daemon+g' docker/rootfs/etc/nginx/nginx.conf
