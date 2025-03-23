@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-export EPS_BASE_URL=${EPS_BASE_URL:-https://raw.githubusercontent.com/ej52/proxmox-scripts/main}
+export EPS_BASE_URL=${EPS_BASE_URL:-https://github.moeyy.xyz/https://raw.githubusercontent.com/Catfish-Y/proxmox-scripts/main}
 export EPS_CT_INSTALL=false
 
 CLR_RD="\033[0;31m"
@@ -61,5 +61,5 @@ fi
 
 export EPS_UTILS_COMMON=$(wget --no-cache -qO- $EPS_BASE_URL/utils/common.sh)
 export EPS_UTILS_DISTRO=$(wget --no-cache -qO- $EPS_BASE_URL/utils/${_utilDistro}.sh)
-bash -c "$EPS_APP_INSTALL"
+bash -c -v "$EPS_APP_INSTALL"
 
