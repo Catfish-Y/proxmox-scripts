@@ -116,6 +116,10 @@ step_start "Python"
   
   # Setup venv and install pip packages in venv
   python3 -m venv /opt/certbot/
+  
+  # change python source
+  pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+
   . /opt/certbot/bin/activate
   os_fetch -O- $_pipGetScript | python3 >$__OUTPUT
   pip install -q -U --no-cache-dir cryptography cffi certbot tldextract
@@ -129,26 +133,26 @@ step_start "Python"
   step_end "Python ${CLR_CYB}v$PYTHON_VERSION${CLR} ${CLR_GN}and Pip${CLR} ${CLR_CYB}v$PIP_VERSION${CLR} ${CLR_GN}Installed"
 
 step_start "Openresty"
-  if [ "$EPS_OS_DISTRO" = "alpine" ]; then
-    os_fetch -O /etc/apk/keys/admin@openresty.com-5ea678a6.rsa.pub 'http://openresty.org/package/admin@openresty.com-5ea678a6.rsa.pub'
-    sed -i '/openresty.org/d' /etc/apk/repositories >$__OUTPUT
-    printf "http://openresty.org/package/alpine/v$EPS_OS_VERSION/main"| tee -a /etc/apk/repositories >$__OUTPUT
-  else
-    os_fetch -O- https://openresty.org/package/pubkey.gpg | gpg --yes --dearmor -o /usr/share/keyrings/openresty.gpg &>$__OUTPUT
+  # if [ "$EPS_OS_DISTRO" = "alpine" ]; then
+  #   os_fetch -O /etc/apk/keys/admin@openresty.com-5ea678a6.rsa.pub 'http://openresty.org/package/admin@openresty.com-5ea678a6.rsa.pub'
+  #   sed -i '/openresty.org/d' /etc/apk/repositories >$__OUTPUT
+  #   printf "http://openresty.org/package/alpine/v$EPS_OS_VERSION/main"| tee -a /etc/apk/repositories >$__OUTPUT
+  # else
+  #   os_fetch -O- https://openresty.org/package/pubkey.gpg | gpg --yes --dearmor -o /usr/share/keyrings/openresty.gpg &>$__OUTPUT
 
-    repository=http://openresty.org/package/$EPS_OS_DISTRO
-    if [ "$EPS_OS_ARCH" != "amd64" ]; then
-      repository=http://openresty.org/package/$EPS_OS_ARCH/$EPS_OS_DISTRO
-    fi
+  #   repository=http://openresty.org/package/$EPS_OS_DISTRO
+  #   if [ "$EPS_OS_ARCH" != "amd64" ]; then
+  #     repository=http://openresty.org/package/$EPS_OS_ARCH/$EPS_OS_DISTRO
+  #   fi
 
-    source="deb [arch=$EPS_OS_ARCH signed-by=/usr/share/keyrings/openresty.gpg] $repository $EPS_OS_CODENAME "
-    if [ "$EPS_OS_DISTRO" = "debian" ]; then
-      source+="openresty"
-    else
-      source+="main"
-    fi
-    printf "$source" | tee /etc/apt/sources.list.d/openresty.list >$__OUTPUT
-  fi
+  #   source="deb [arch=$EPS_OS_ARCH signed-by=/usr/share/keyrings/openresty.gpg] $repository $EPS_OS_CODENAME "
+  #   if [ "$EPS_OS_DISTRO" = "debian" ]; then
+  #     source+="openresty"
+  #   else
+  #     source+="main"
+  #   fi
+  #   printf "$source" | tee /etc/apt/sources.list.d/openresty.list >$__OUTPUT
+  # fi
 
   pkg_update
   pkg_add openresty
@@ -207,11 +211,15 @@ step_start "Yarn"
   ln -sf /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn
   ln -sf /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg
   rm -rf "$GNUPGHOME" yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
+  
+  #Change-Source(Yarn)
+  yarn config set registry https://registry.npmmirror.com
+
   step_end "Yarn ${CLR_CYB}v$YARN_VERSION${CLR} ${CLR_GN}Installed"
 
 step_start "Nginx Proxy Manager" "Downloading" "Downloaded"
-  NPM_VERSION=$(os_fetch -O- https://api.github.com/repos/NginxProxyManager/nginx-proxy-manager/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
-  os_fetch -O- https://codeload.github.com/NginxProxyManager/nginx-proxy-manager/tar.gz/v$NPM_VERSION | tar -xz
+  NPM_VERSION=$(os_fetch -O- https://hacs.catwfish.com/api/repos/NginxProxyManager/nginx-proxy-manager/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+  os_fetch -O- https://github.moeyy.xyz/https://github.com/NginxProxyManager/nginx-proxy-manager/archive/v$NPM_VERSION.tar.gz | tar -xz
   cd ./nginx-proxy-manager-$NPM_VERSION
   step_end "Nginx Proxy Manager ${CLR_CYB}v$NPM_VERSION${CLR} ${CLR_GN}Downloaded"
 
@@ -277,6 +285,13 @@ step_start "Enviroment" "Setting up" "Setup"
 step_start "Frontend" "Building" "Built"
   cd ./frontend
   export NODE_ENV=development
+
+  # change github links
+  sed -i 's/github.com/github.moeyy.xyz/github.com/g' package.json
+  sed -i 's/raw.githubusercontent.com/github.moeyy.xyz/raw.githubusercontent.com/g' package.json
+  # Change-Source(Yarn-lock-file)
+  sed -i 's/registry.yarnpkg.com/registry.npmmirror.com/g' yarn.lock
+
   yarn cache clean --silent --force >$__OUTPUT
   yarn install --silent --network-timeout=30000 >$__OUTPUT 
   yarn build >$__OUTPUT 
@@ -291,6 +306,10 @@ step_start "Backend" "Initializing" "Initialized"
   fi
   cd /app
   export NODE_ENV=development
+  
+  # Change-Source(Yarn-lock-file)
+  sed -i 's/registry.yarnpkg.com/registry.npmmirror.com/g' yarn.lock
+  
   yarn install --silent --network-timeout=30000 >$__OUTPUT 
 
 step_start "Services" "Starting" "Started"

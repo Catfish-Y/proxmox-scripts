@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-export EPS_BASE_URL=${EPS_BASE_URL:-https://raw.githubusercontent.com/ej52/proxmox-scripts/main}
+export EPS_BASE_URL=${EPS_BASE_URL:-https://github.moeyy.xyz/https://raw.githubusercontent.com/Catfish-Y/proxmox-scripts/main}
 export EPS_CT_INSTALL=true
 
 export EPS_UTILS_COMMON=$(wget --no-cache -qO- $EPS_BASE_URL/utils/common.sh)
@@ -185,6 +185,7 @@ step_start "LXC container" "Creating" "Created"
   sleep 2
   if [ "$EPS_OS_DISTRO" = "alpine" ]; then
     pct exec "$EPS_CT_ID" -- ash -c "apk add bash >/dev/null"
+    pct exec "$EPS_CT_ID" -- sed -i 's#https\?://dl-cdn.alpinelinux.org/alpine#https://mirrors.tuna.tsinghua.edu.cn/alpine#g' /etc/apk/repositories
   fi
 
   step_end "LXC container ${CLR_CYB}$EPS_CT_ID${CLR_GN} created successfully"
