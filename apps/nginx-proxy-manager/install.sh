@@ -161,8 +161,9 @@ step_start "Openresty"
 
   pkg_update
   pkg_add openresty
-  ln -sf /usr/local/openresty/nginx/sbin/nginx /usr/sbin/nginx
-  ln -sf /usr/local/openresty/nginx/ /etc/nginx
+  # ln -sf /usr/local/openresty/nginx/sbin/nginx /usr/sbin/nginx
+  # ln -sf /usr/local/openresty/nginx/ /etc/nginx
+  export PATH=$PATH:/usr/lib/nginx/bin/
   OPENRESTY_VERSION=$(openresty -v 2>&1 | grep -o '[0-9.]*$')
   step_end "Openresty ${CLR_CYB}v$OPENRESTY_VERSION${CLR} ${CLR_GN}Installed"
 
